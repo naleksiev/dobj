@@ -1,5 +1,4 @@
 #include "dobject.h"
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -10,10 +9,6 @@
 typedef struct do_str_t do_str_t;
 typedef struct do_obj_t do_obj_t;
 typedef struct do_arr_t do_arr_t;
-
-typedef struct do_ctx_t {
-    do_alloc alloc;
-} do_ctx_t;
 
 typedef struct do_value_t {
     do_val_type_t type;
@@ -28,21 +23,25 @@ typedef struct do_value_t {
     };
 } do_value_t;
 
-typedef struct do_str_t {
+struct do_ctx_t {
+    do_alloc alloc;
+};
+
+struct do_str_t {
     int32_t len;
     char    cstr[1];
-} do_str_t;
+};
 
-typedef struct do_obj_t {
+struct do_obj_t {
     const do_type_t* type;
     do_value_t       fields[0];
-} do_obj_t;
+};
 
-typedef struct do_arr_t {
+struct do_arr_t {
     int32_t     capacity;
     int32_t     count;
     do_value_t* data;
-} do_arr_t;
+};
 
 struct do_fld_t {
     do_value_t    name;
@@ -54,8 +53,6 @@ struct do_type_t {
     int32_t    count;
     do_fld_t   fields[0];
 };
-
-static_assert(sizeof(do_value_t) == sizeof(do_val_t), "do_val_t and do_value_t should have identical size.");
 
 static void* do_allocator(void* ptr, int32_t size) {
     if (ptr) {

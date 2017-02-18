@@ -22,7 +22,10 @@ void* alloc(void* ptr, int32_t size) {
 }
 
 void dump(do_val_t val, int32_t indent) {
-    for (int32_t i=0; i<indent; i++)
+    int32_t i;
+    int32_t j;
+
+    for (i=0; i<indent; i++)
         printf("  ");
     switch (do_val_type(val)) {
         case do_val_type_nil:
@@ -43,8 +46,8 @@ void dump(do_val_t val, int32_t indent) {
         case do_val_type_obj: {
             printf("{\n");
             const do_type_t* type = do_obj_type(val);
-            for (int32_t i=0; i<do_type_count(type); i++) {
-                for (int32_t i=0; i<=abs(indent); i++)
+            for (i=0; i<do_type_count(type); i++) {
+                for (j=0; j<=abs(indent); j++)
                     printf("  ");
                 printf("%s : ", do_str_cstr(do_fld_name(do_type_field(type, i))));
                 dump(do_obj_get(val, do_type_field(type, i)), -(abs(indent) + 1));
@@ -53,14 +56,14 @@ void dump(do_val_t val, int32_t indent) {
                 else
                     printf("\n");
             }
-            for (int32_t i=0; i<abs(indent); i++)
+            for (i=0; i<abs(indent); i++)
                 printf("  ");
             printf("}");
             break;
         }
         case do_val_type_arr: {
             printf("[\n");
-            for (int32_t i=0; i<do_arr_count(val); i++) {
+            for (i=0; i<do_arr_count(val); i++) {
                 dump(do_arr_get(val, i), abs(indent) + 1);
                 if (i < do_arr_count(val) - 1)
                     printf(",\n");
