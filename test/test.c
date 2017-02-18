@@ -32,7 +32,7 @@ void dump(do_val_t val, int32_t indent) {
             printf("%s", do_bool_get(val) ? "true" : "false");
             break;
         case do_val_type_int:
-            printf("%ld", do_int_get(val));
+            printf("%lld", (long long int)do_int_get(val));
             break;
         case do_val_type_flt:
             printf("%g", do_flt_get(val));
@@ -72,6 +72,8 @@ void dump(do_val_t val, int32_t indent) {
         }
         case do_val_type_ptr:
             printf("0x%p", do_ptr_get(val));
+            break;
+        case do_val_type_any:
             break;
     }
     if (indent == 0)

@@ -213,6 +213,7 @@ do_val_t do_val_clone(do_ctx_t* ctx, do_val_t val) {
         case do_val_type_int:
         case do_val_type_flt:
         case do_val_type_ptr:
+        case do_val_type_any:
             return val;
         case do_val_type_str:
             return do_val_str_len(ctx, do_str_cstr(val), do_str_len(val));
@@ -242,6 +243,7 @@ void do_val_destroy(do_ctx_t* ctx, do_val_t val) {
         case do_val_type_int:
         case do_val_type_flt:
         case do_val_type_ptr:
+        case do_val_type_any:
             break;
         case do_val_type_str:
             ctx->alloc(pv->s, 0);
