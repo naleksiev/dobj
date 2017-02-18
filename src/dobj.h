@@ -1,5 +1,5 @@
-#ifndef DATA_STRUCTURE_H
-#define DATA_STRUCTURE_H
+#ifndef DOBJ_H
+#define DOBJ_H
 
 #include <stdint.h>
 #include <stdbool.h>

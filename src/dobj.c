@@ -1,4 +1,4 @@
-#include "dobject.h"
+#include "dobj.h"
 #include <stdlib.h>
 #include <string.h>
 

@@ -1,4 +1,4 @@
-#include "../src/dobject.h"
+#include "../src/dobj.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
