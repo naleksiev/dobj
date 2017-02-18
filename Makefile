@@ -1,6 +1,6 @@
 .build/test.o: test/test.c src/dobject.h src/dobject.c
 	mkdir -p .build
-	$(CC) -std=c89 -Wall -Os test/test.c src/dobject.c -o .build/test.o
+	$(CC) -Wall -Os test/test.c src/dobject.c -o .build/test.o
 
 all: .build/test.o
 
