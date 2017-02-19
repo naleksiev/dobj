@@ -165,7 +165,8 @@ do_val_t do_val_str_len(do_ctx_t* ctx, const char* string, int32_t length) {
     if (length > 0) {
         v.s = (do_str_t*)ctx->alloc(NULL, sizeof(do_str_t) + length);
         v.s->len = length;
-        strncpy(v.s->cstr, string, length + 1);
+        strncpy(v.s->cstr, string, length);
+        v.s->cstr[length] = '\0';
     }
     else
         v.s = NULL;
