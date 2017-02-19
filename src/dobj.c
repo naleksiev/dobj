@@ -188,6 +188,9 @@ do_val_t do_val_arr(do_ctx_t* ctx) {
     do_value_t v;
     v.type = do_val_type_arr;
     v.a = (do_arr_t*)ctx->alloc(NULL, sizeof(do_arr_t));
+    v.a->capacity = 0;
+    v.a->count = 0;
+    v.a->data = NULL;
     return *(do_val_t*)&v;
 }
 
@@ -255,6 +258,8 @@ void do_val_destroy(do_ctx_t* ctx, do_val_t val) {
         case do_val_type_arr: {
                 for (int32_t i=0; i<do_arr_count(val); i++)
                     do_val_destroy(ctx, do_arr_get(val, i));
+                if (pv->a->data)
+                    ctx->alloc(pv->a->data, 0);
                 ctx->alloc(pv->a, 0);
             }
             break;
