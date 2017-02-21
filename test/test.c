@@ -91,7 +91,9 @@ int main() {
     do_fld_def_t fields[] = {
         { "A", do_val_type_flt },
         { "B", do_val_type_obj },
-        { "C", do_val_type_arr }
+        { "C", do_val_type_arr },
+        { "D", do_val_type_bool },
+        { "E", do_val_type_any }
     };
     do_type_t* type = do_type_create(ctx, "TestObj", fields, COUNT_OF(fields));
 
@@ -99,11 +101,14 @@ int main() {
     do_obj_set(obj, do_type_find(type, "A"), do_val_flt(ctx, 1.2f));
     do_obj_set(obj, do_type_find(type, "B"), do_val_obj(ctx, type));
     do_obj_set(obj, do_type_find(type, "C"), do_val_arr(ctx));
+    do_obj_set(obj, do_type_find(type, "D"), do_val_bool(ctx, true));
+    do_obj_set(obj, do_type_find(type, "E"), do_val_bool(ctx, false));
 
     do_val_t arr = do_obj_get(obj, do_type_find(type, "C"));
     do_arr_add(ctx, arr, do_val_flt(ctx, 3.4f));
     do_arr_add(ctx, arr, do_val_nil(ctx));
     do_arr_add(ctx, arr, do_val_str(ctx, "Hello"));
+    do_arr_add(ctx, arr, do_val_obj(ctx, type));
     dump(obj, 0);
 
     do_val_destroy(ctx, obj);
