@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct do_ctx_t  do_ctx_t;
 typedef struct do_fld_t  do_fld_t;
 typedef struct do_type_t do_type_t;
@@ -78,6 +82,10 @@ void             do_arr_add(do_ctx_t* ctx, do_val_t arr, do_val_t value);
 void             do_arr_insert(do_ctx_t* ctx, do_val_t arr, int32_t index, do_val_t value);
 void             do_arr_remove(do_ctx_t* ctx, do_val_t arr, do_val_t value);
 void             do_arr_remove_at(do_ctx_t* ctx, do_val_t arr, int32_t index);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
