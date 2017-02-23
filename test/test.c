@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define COUNT_OF(x)     (sizeof(x) / sizeof(x[0]))
 int32_t allocs = 0;
 
 void* alloc(void* ptr, int32_t size) {
@@ -41,7 +42,7 @@ void dump(do_val_t val, int32_t indent) {
             printf("%g", do_flt_get(val));
             break;
         case do_val_type_str:
-            printf("%s", do_str_cstr(val));
+            printf("\"%s\"", do_str_cstr(val));
             break;
         case do_val_type_obj: {
             printf("{\n");
@@ -70,6 +71,8 @@ void dump(do_val_t val, int32_t indent) {
                 else
                     printf("\n");
             }
+            for (i=0; i<abs(indent); i++)
+                printf("  ");
             printf("]");
             break;
         }
@@ -85,15 +88,27 @@ void dump(do_val_t val, int32_t indent) {
 
 int main() {
     do_ctx_t* ctx = do_ctx_create(&alloc);
-    do_fld_def_t fields[2] = {
+    do_fld_def_t fields[] = {
         { "A", do_val_type_flt },
-        { "B", do_val_type_obj }
+        { "B", do_val_type_obj },
+        { "C", do_val_type_arr },
+        { "D", do_val_type_bool },
+        { "E", do_val_type_any }
     };
-    do_type_t* type = do_type_create(ctx, "TestObj", fields, 2);
+    do_type_t* type = do_type_create(ctx, "TestObj", fields, COUNT_OF(fields));
 
     do_val_t obj = do_val_obj(ctx, type);
     do_obj_set(obj, do_type_find(type, "A"), do_val_flt(ctx, 1.2f));
     do_obj_set(obj, do_type_find(type, "B"), do_val_obj(ctx, type));
+    do_obj_set(obj, do_type_find(type, "C"), do_val_arr(ctx));
+    do_obj_set(obj, do_type_find(type, "D"), do_val_bool(ctx, true));
+    do_obj_set(obj, do_type_find(type, "E"), do_val_bool(ctx, false));
+
+    do_val_t arr = do_obj_get(obj, do_type_find(type, "C"));
+    do_arr_add(ctx, arr, do_val_flt(ctx, 3.4f));
+    do_arr_add(ctx, arr, do_val_nil(ctx));
+    do_arr_add(ctx, arr, do_val_str(ctx, "Hello"));
+    do_arr_add(ctx, arr, do_val_obj(ctx, type));
     dump(obj, 0);
 
     do_val_destroy(ctx, obj);
