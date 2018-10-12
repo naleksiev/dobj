@@ -8,11 +8,11 @@
 extern "C" {
 #endif
 
-typedef struct do_ctx_t  do_ctx_t;
-typedef struct do_fld_t  do_fld_t;
-typedef struct do_type_t do_type_t;
+typedef struct do_ctx  do_ctx_t;
+typedef struct do_fld  do_fld_t;
+typedef struct do_type do_type_t;
 
-typedef enum do_val_type_t {
+typedef enum do_val_type {
     do_val_type_nil,
     do_val_type_bool,
     do_val_type_int,
@@ -24,11 +24,11 @@ typedef enum do_val_type_t {
     do_val_type_any
 } do_val_type_t;
 
-typedef struct do_val_t {
+typedef struct do_val {
     void* data[2];
 } do_val_t;
 
-typedef struct do_fld_def_t {
+typedef struct do_fld_def {
     const char*   name;
     do_val_type_t type;
 } do_fld_def_t;

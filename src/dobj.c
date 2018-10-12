@@ -6,11 +6,11 @@
 #   define NULL 0
 #endif
 
-typedef struct do_str_t do_str_t;
-typedef struct do_obj_t do_obj_t;
-typedef struct do_arr_t do_arr_t;
+typedef struct do_str do_str_t;
+typedef struct do_obj do_obj_t;
+typedef struct do_arr do_arr_t;
 
-typedef struct do_value_t {
+typedef struct do_value {
     do_val_type_t type;
     union {
         bool      b;
@@ -23,32 +23,32 @@ typedef struct do_value_t {
     };
 } do_value_t;
 
-struct do_ctx_t {
+struct do_ctx {
     do_alloc alloc;
 };
 
-struct do_str_t {
+struct do_str {
     int32_t len;
     char    cstr[1];
 };
 
-struct do_obj_t {
+struct do_obj {
     const do_type_t* type;
     do_value_t       fields[0];
 };
 
-struct do_arr_t {
+struct do_arr {
     int32_t     capacity;
     int32_t     count;
     do_value_t* data;
 };
 
-struct do_fld_t {
+struct do_fld {
     do_value_t    name;
     do_val_type_t type;
 };
 
-struct do_type_t {
+struct do_type {
     do_value_t name;
     int32_t    count;
     do_fld_t   fields[0];
